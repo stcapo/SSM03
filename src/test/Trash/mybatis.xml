@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+    </settings>
+    <!--环境集合-->
+    <!--<environments default="dev">
+        &lt;!&ndash;单个环境配置,每个环境对应着一个数据库,可以有多个环境&ndash;&gt;
+        <environment id="dev">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/ssm"/>
+                <property name="username" value="root"/>
+                <property name="password" value="3306"/>
+            </dataSource>
+        </environment>
+
+    </environments>-->
+    <!--mybatis-mapper的位置-->
+    <mappers>
+        <mapper resource="com/xuchen/dao/UserDao.xml"/>
+        <package name="com/xuchen/bean"/>
+    </mappers>
+
+
+</configuration>

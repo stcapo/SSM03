@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <!--config jdbc dataSource-->
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/ssm?serverTimezone=GMT"
+                        userId="root"
+                        password="3306">
+            <property name="useInformationSchema" value="true"/>
+            <property name="remarks" value="true"/>
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--config generate javabean(domain)-->
+        <javaModelGenerator targetPackage="com.xuchen.domain" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--mapper-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+
+        <!--dao-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.xuchen.dao"  targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!--point which table you want to generator-->
+        <table tableName="departments" domainObjectName="Department"/>
+        <table tableName="employees" domainObjectName="Employee"/>
+
+    </context>
+</generatorConfiguration>

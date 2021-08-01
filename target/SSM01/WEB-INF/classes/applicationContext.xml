@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+
+    <!--spring configuration core:
+    dataSource
+    integral mybatis
+    transaction control-->
+
+    <!--configuration of service-->
+    <context:component-scan base-package="com.xuchen">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!--第一步: 创建数据库连接池DataSource-->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ssm?serverTimezone=GMT"/>
+        <property name="username" value="root"/>
+        <property name="password" value="3306"/>
+    </bean>
+
+    <!--第二步: 配置sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath:mapper/*.xml"/>
+        <!--<property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties" value="param1=value1"/>
+                </bean>
+            </array>
+        </property>-->
+    </bean>
+
+    <!--第三步: 将mybatis接口映射加入到ioc中  add mybatis interface to ioc-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.xuchen.dao"/>
+    </bean>
+
+
+
+    <!--transaction
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <aop:config>
+        <aop:pointcut id="txPointCut" expression="execution(* com.xuchen.service.*(..))"/>
+        <aop:advisor advice-ref="txAdvise" pointcut-ref="txPointCut"/>
+    </aop:config>
+
+    <tx:advice id="txAdvise" transaction-manager="transactionManager">
+        <tx:attributes>
+            &lt;!&ndash;all method is transaction method&ndash;&gt;
+            <tx:method name="*"/>
+            &lt;!&ndash;all method start with "get" is transaction method&ndash;&gt;
+            <tx:method name="get*" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>-->
+
+    <!--Addition: 跨过sqlSession实现批量CRUD-->
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory"/>
+        <constructor-arg name="executorType" value="BATCH"/>
+    </bean>
+    
+
+</beans>
