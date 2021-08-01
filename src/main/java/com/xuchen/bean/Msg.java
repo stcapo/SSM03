@@ -12,9 +12,9 @@ public class Msg {
 
     String status;
 
-    Map<String, PageInfo<Employee>> map = new HashMap<>();
+    Map<String, Object> map = new HashMap<>();
 
-    public Msg(int statusCode, String status, Map<String, PageInfo<Employee>> map) {
+    public Msg(int statusCode, String status, Map<String, Object> map) {
         this.statusCode = statusCode;
         this.status = status;
     }
@@ -39,10 +39,11 @@ public class Msg {
         return msg;
     }
     // add链式反应
-    public Msg add(String s,PageInfo<Employee> pi){
+    public Msg add(String s,Object pi){
         this.map.put(s,pi);
         return this;
     }
+
 
 
 
@@ -70,11 +71,11 @@ public class Msg {
         this.status = status;
     }
 
-    public Map<String, PageInfo<Employee>> getMap() {
+    public Map<String, Object> getMap() {
         return map;
     }
 
-    public void setMap(Map<String, PageInfo<Employee>> map) {
+    public void setMap(Map<String, Object> map) {
         this.map = map;
     }
 

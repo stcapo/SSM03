@@ -13,4 +13,20 @@ public class EmployeeService {
     public List<Employee> getAll() {
         return em.selectByExample(null);
     }
+
+    public void saveEmp(Employee e) {
+        em.insertSelective(e);
+    }
+
+    /*public int insertOne(String name,Integer workyear,Integer departmentid){
+        Employee e = new Employee();
+        e.setEmployeename(name);
+        e.setWorkyears(workyear);
+        e.setDepartmentid(departmentid);
+        return em.insertSelective(e);
+    }*/
+
+    /*public List<Integer> selectDepartmentIDSort(){
+        em.selectByExample();
+    }*/
 }

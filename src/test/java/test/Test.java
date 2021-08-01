@@ -11,10 +11,10 @@ public class Test {
 
     @org.junit.Test
     public void select(){
-        System.out.println(new ClassPathXmlApplicationContext("applicationContext.xml").getBean(EmployeeMapper.class).selectByPrimaryKey(2));
+        
     }
 
-    @org.junit.Test
+    /*@org.junit.Test
     public void insert(){
         EmployeeMapper em = new ClassPathXmlApplicationContext("applicationContext.xml").getBean(EmployeeMapper.class);
         for (int i=10;i<100;i++){
@@ -25,5 +25,9 @@ public class Test {
             e.setDepartmentid(3);
             em.insert(e);
         }
-    }
+    }*/
+
+
+
+
 }
